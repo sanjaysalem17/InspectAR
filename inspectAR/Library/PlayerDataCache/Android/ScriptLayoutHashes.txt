@@ -3,7 +3,7 @@ PlayerPath?
 D:/Github/inspectAR/inspectAR/Test.aab
 SceneListBegin?
 Assets/Scenes/Menu.unity
-Assets/Scenes/SampleScene.unity
+Assets/Scenes/AR.unity
 SceneListEnd?
 71bb6a6b6c8f052f948db64c7dd3ca4f VuforiaScripts.dll:.BoundingBoxRenderer
 e63944317d2f5958e31963668bb29158 Assembly-CSharp.dll:TMPro.Examples.VertexZoom
