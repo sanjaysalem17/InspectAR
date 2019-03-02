@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1071401105941",
+    "firebase_url": "https://sh-cloud-test.firebaseio.com",
+    "project_id": "sh-cloud-test",
+    "storage_bucket": "sh-cloud-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1071401105941:android:933866993be75898",
+        "android_client_info": {
+          "package_name": "WeNeedSleep.Bert.NoSleep"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1071401105941-8nbst602lllqur1fcmrpghvlick7ea75.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASB5ALwLBWw_mmcCqlv24rIMyj5CW3MvA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
