@@ -1,6 +1,6 @@
 Android
 PlayerPath?
-D:/Github/inspectAR/inspectAR/Test.aab
+D:/Test.aab
 SceneListBegin?
 Assets/Scenes/Menu.unity
 Assets/Scenes/AR.unity
@@ -370,3 +370,5 @@ fbbf64dcbe0662e3eda1dec45ea8f895 Vuforia.UnityExtensions.dll:Vuforia.WireframeBe
 71bb6a6b6c8f052f948db64c7dd3ca4f Vuforia.UnityExtensions.dll:Vuforia.WireframeTrackableEventHandler
 11319334e5365797f8056694f9b5dae4 Assembly-CSharp.dll:TMPro.Examples.ObjectSpin
 71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:TMPro.Examples.SimpleScript
+f0288f1713f22cd01760b8a52c90ab7a Assembly-CSharp.dll:.DynamicText
+71bb6a6b6c8f052f948db64c7dd3ca4f Firebase.Platform.dll:Firebase.Platform.FirebaseMonoBehaviour
