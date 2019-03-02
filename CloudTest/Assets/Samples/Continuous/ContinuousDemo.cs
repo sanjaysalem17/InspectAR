@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using Firebase;
 using Firebase.Database;
 using Firebase.Unity.Editor;
-
+using System.Collections.Generic;
 public class ContinuousDemo : MonoBehaviour {
 
 	private IScanner BarcodeScanner;
@@ -16,7 +16,8 @@ public class ContinuousDemo : MonoBehaviour {
 	public RawImage Image;
 	public AudioSource Audio;
 	private float RestartTime;
-
+    private float ClearTime;
+    private String s;
 	// Disable Screen Rotation on that screen
 	void Awake()
 	{
@@ -40,9 +41,11 @@ public class ContinuousDemo : MonoBehaviour {
 			var rect = Image.GetComponent<RectTransform>();
 			var newHeight = rect.sizeDelta.x * BarcodeScanner.Camera.Height / BarcodeScanner.Camera.Width;
 			rect.sizeDelta = new Vector2(rect.sizeDelta.x, newHeight);
-
-			RestartTime = Time.realtimeSinceStartup;
-		};
+            FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://sh-cloud-test.firebaseio.com/");
+            DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
+            RestartTime = Time.realtimeSinceStartup;
+            ClearTime = Time.realtimeSinceStartup;
+        };
 	}
 
 	/// <summary>
@@ -50,45 +53,49 @@ public class ContinuousDemo : MonoBehaviour {
 	/// </summary>
 	private void StartScanner()
 	{
-		BarcodeScanner.Scan((barCodeType, barCodeValue) => {
+        BarcodeScanner.Scan((barCodeType, barCodeValue) => {
 			BarcodeScanner.Stop();
-            //if (TextHeader.text.Length > 250)
-            //{
-            //	TextHeader.text = "";
-            //}
-            RestartTime += Time.realtimeSinceStartup + 1f;
-
-            // Feedback
-            //Audio.Play();
-            FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://sh-cloud-test.firebaseio.com/");
-            DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
+			RestartTime += Time.realtimeSinceStartup + 1f;
+            ClearTime = Time.realtimeSinceStartup + 1.2f;
+            Debug.Log("60");
             FirebaseDatabase.DefaultInstance
-      .GetReference(barCodeValue)
-      .GetValueAsync().ContinueWith(task => {
-          if (task.IsFaulted)
-          {
-          // Handle the error...
-      }
-          else if (task.IsCompleted)
-          {
-              DataSnapshot snapshot = task.Result;
-              // Do something with snapshot...
-              if(snapshot.Value != null)
-              {
-                  TextHeader.text += "Found: " +snapshot + "\n";
-                  Debug.Log(snapshot);
-              }
-              else
-              {
-                  TextHeader.text += "Found: " + "Nonexistent Key" + "\n";
-                  Debug.Log("Nonexistent Key");
-              }
-          }
-      });
-#if UNITY_ANDROID || UNITY_IOS
+            .GetReference(barCodeValue)
+            .GetValueAsync().ContinueWith(task =>
+            {
+                Debug.Log("65");
+                if (task.IsFaulted)
+                {
+                    // Handle the error...
+             
+                }
+                else if (task.IsCompleted)
+                {
+                    Debug.Log("73");
+                    DataSnapshot snapshot = task.Result;
+                    Debug.Log("75");
+                    if (snapshot.Value != null)
+                    {
+                        String result = "";
+                        foreach (var item in snapshot.Children)
+                        {
+                            result += item.Key.ToString() + ": " + item.Value.ToString() + ", ";
+                        }
+                        s = result;
+ 
+                    }
+                    else
+                    {
+
+                        s = "Nonexistent Key";
+
+                    }
+                }
+            });
+
+			#if UNITY_ANDROID || UNITY_IOS
 			Handheld.Vibrate();
-#endif
-        });
+			#endif
+		});
 	}
 
 	/// <summary>
@@ -107,6 +114,11 @@ public class ContinuousDemo : MonoBehaviour {
 			StartScanner();
 			RestartTime = 0;
 		}
+        TextHeader.text = s;
+        if ( ClearTime < Time.realtimeSinceStartup)
+        {
+            s = "";
+        }
 	}
 
 	#region UI Buttons
